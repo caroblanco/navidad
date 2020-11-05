@@ -18,12 +18,9 @@ class Arbol{
 	
 	method tieneCapacidadPara(regalo) = regalo.espacioQueOcupa() <= self.capacidadRestante()
 	
-	method cantOcupada() = elementos.sum({unRegalo => unRegalo.espacioQueOcupa()})
+	method cantOcupada() = elementos.sum({unElem => unElem.espacioQueOcupa()})
 	
-	
-	method beneficiariosArbol() = self.extraerBeneficiarios(regalos) + self.extraerBeneficiarios(tarjetas)
-	
-	method extraerBeneficiarios(lista) = lista.map({unObjeto => unObjeto.destinatario()}) 
+	method beneficiariosArbol() = regalos.map{regalo => regalo.destinatario()} + tarjetas.map{tar => tar.destinatario()}
 	
 	method costoTotal() = elementos.sum({unElemento=> unElemento.precio()})
 	
@@ -37,9 +34,9 @@ class Arbol{
 	
 	method regalosAmorosos() = regalos.filter({unRegalo => self.regaloAmoroso(unRegalo)})
 	
-	method tarjetaCara(cant) = tarjetas.any({unaTar => unaTar.valorAdjunto() >= cant})
+	method tarjetaCara() = tarjetas.any({unaTar => unaTar.valorAdjunto() >= 1000})
 	
-	method arbolPortentoso() =  self.regalosAmorosos().size() > 5 || self.tarjetaCara(1000)
+	method arbolPortentoso() =  self.regalosAmorosos().size() > 5 || self.tarjetaCara()
 	
 	method adornoMasPesado() = adornos.max({unAdorno => unAdorno.peso()})
 	
@@ -59,6 +56,7 @@ class ArbolArt inherits Arbol{
 }
 
 ///////////////////////////////////////////////////
+
 class Regalo{
 	const property precio
 	const property destinatario
