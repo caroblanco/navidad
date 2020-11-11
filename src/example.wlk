@@ -5,18 +5,19 @@ class Arbol{
 	const elementos = regalos + tarjetas
 	
 	method agregarRegalo(regalo){
-		if(self.tieneCapacidadPara(regalo)){
-			regalos.add(regalo)
-		}else{
-			self.error("no se pudo agregar el regalo")
-		}
+		self.tieneCapacidadPara(regalo)
+		regalos.add(regalo)
 	}
 	
 	method capacidad()
 	
 	method capacidadRestante() = self.capacidad() - self.cantOcupada()
 	
-	method tieneCapacidadPara(regalo) = regalo.espacioQueOcupa() <= self.capacidadRestante()
+	method tieneCapacidadPara(regalo){
+		if(regalo.espacioQueOcupa() > self.capacidadRestante()){
+			self.error("no se pudo agregar el regalo")
+		}
+	}
 	
 	method cantOcupada() = elementos.sum({unElem => unElem.espacioQueOcupa()})
 	
@@ -60,7 +61,7 @@ class ArbolArt inherits Arbol{
 class Regalo{
 	const property precio
 	const property destinatario
-	var espacioQueOcupa
+	const espacioQueOcupa
 
 	method espacioQueOcupa() = espacioQueOcupa	
 
@@ -76,7 +77,7 @@ class Tarjeta{
 
 class Adornos{
 	const pesoBase
-	var coefSuperioridad
+	const coefSuperioridad
 	
 	method peso() = pesoBase
 	
